@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ustc.eb.mapper.APIContentMapper" >
+  <resultMap id="BaseResultMap" type="cn.ustc.eb.po.APIContent" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="content_name" property="contentName" jdbcType="VARCHAR" />
+    <result column="content_url" property="contentUrl" jdbcType="VARCHAR" />
+    <result column="apitext_id" property="apitextId" jdbcType="INTEGER" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="apicategory_id" property="apicategoryId" jdbcType="INTEGER" />
+    <result column="prepared" property="prepared" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, content_name, content_url, apitext_id, parent_id, apicategory_id, prepared
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.ustc.eb.po.APIContentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from api_content
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from api_content
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from api_content
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.ustc.eb.po.APIContentExample" >
+    delete from api_content
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.ustc.eb.po.APIContent" >
+    insert into api_content (id, content_name, content_url, 
+      apitext_id, parent_id, apicategory_id, 
+      prepared)
+    values (#{id,jdbcType=INTEGER}, #{contentName,jdbcType=VARCHAR}, #{contentUrl,jdbcType=VARCHAR}, 
+      #{apitextId,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{apicategoryId,jdbcType=INTEGER}, 
+      #{prepared,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.ustc.eb.po.APIContent" >
+    insert into api_content
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="contentName != null" >
+        content_name,
+      </if>
+      <if test="contentUrl != null" >
+        content_url,
+      </if>
+      <if test="apitextId != null" >
+        apitext_id,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="apicategoryId != null" >
+        apicategory_id,
+      </if>
+      <if test="prepared != null" >
+        prepared,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="contentName != null" >
+        #{contentName,jdbcType=VARCHAR},
+      </if>
+      <if test="contentUrl != null" >
+        #{contentUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="apitextId != null" >
+        #{apitextId,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="apicategoryId != null" >
+        #{apicategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="prepared != null" >
+        #{prepared,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.ustc.eb.po.APIContentExample" resultType="java.lang.Integer" >
+    select count(*) from api_content
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update api_content
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.contentName != null" >
+        content_name = #{record.contentName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contentUrl != null" >
+        content_url = #{record.contentUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apitextId != null" >
+        apitext_id = #{record.apitextId,jdbcType=INTEGER},
+      </if>
+      <if test="record.parentId != null" >
+        parent_id = #{record.parentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.apicategoryId != null" >
+        apicategory_id = #{record.apicategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="record.prepared != null" >
+        prepared = #{record.prepared,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update api_content
+    set id = #{record.id,jdbcType=INTEGER},
+      content_name = #{record.contentName,jdbcType=VARCHAR},
+      content_url = #{record.contentUrl,jdbcType=VARCHAR},
+      apitext_id = #{record.apitextId,jdbcType=INTEGER},
+      parent_id = #{record.parentId,jdbcType=INTEGER},
+      apicategory_id = #{record.apicategoryId,jdbcType=INTEGER},
+      prepared = #{record.prepared,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.ustc.eb.po.APIContent" >
+    update api_content
+    <set >
+      <if test="contentName != null" >
+        content_name = #{contentName,jdbcType=VARCHAR},
+      </if>
+      <if test="contentUrl != null" >
+        content_url = #{contentUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="apitextId != null" >
+        apitext_id = #{apitextId,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="apicategoryId != null" >
+        apicategory_id = #{apicategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="prepared != null" >
+        prepared = #{prepared,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.ustc.eb.po.APIContent" >
+    update api_content
+    set content_name = #{contentName,jdbcType=VARCHAR},
+      content_url = #{contentUrl,jdbcType=VARCHAR},
+      apitext_id = #{apitextId,jdbcType=INTEGER},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      apicategory_id = #{apicategoryId,jdbcType=INTEGER},
+      prepared = #{prepared,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
