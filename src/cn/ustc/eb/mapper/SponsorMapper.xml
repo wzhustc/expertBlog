@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ustc.eb.mapper.SponsorMapper" >
+  <resultMap id="BaseResultMap" type="cn.ustc.eb.po.Sponsor" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="sposonr_money" property="sposonrMoney" jdbcType="DECIMAL" />
+    <result column="sposonr_time" property="sposonrTime" jdbcType="TIMESTAMP" />
+    <result column="sposonr_way" property="sposonrWay" jdbcType="VARCHAR" />
+    <result column="prepared" property="prepared" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, name, email, sposonr_money, sposonr_time, sposonr_way, prepared
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.ustc.eb.po.SponsorExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from sponsor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sponsor
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sponsor
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.ustc.eb.po.SponsorExample" >
+    delete from sponsor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.ustc.eb.po.Sponsor" >
+    insert into sponsor (id, name, email, 
+      sposonr_money, sposonr_time, sposonr_way, 
+      prepared)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{sposonrMoney,jdbcType=DECIMAL}, #{sposonrTime,jdbcType=TIMESTAMP}, #{sposonrWay,jdbcType=VARCHAR}, 
+      #{prepared,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.ustc.eb.po.Sponsor" >
+    insert into sponsor
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="sposonrMoney != null" >
+        sposonr_money,
+      </if>
+      <if test="sposonrTime != null" >
+        sposonr_time,
+      </if>
+      <if test="sposonrWay != null" >
+        sposonr_way,
+      </if>
+      <if test="prepared != null" >
+        prepared,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="sposonrMoney != null" >
+        #{sposonrMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="sposonrTime != null" >
+        #{sposonrTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sposonrWay != null" >
+        #{sposonrWay,jdbcType=VARCHAR},
+      </if>
+      <if test="prepared != null" >
+        #{prepared,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.ustc.eb.po.SponsorExample" resultType="java.lang.Integer" >
+    select count(*) from sponsor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sponsor
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sposonrMoney != null" >
+        sposonr_money = #{record.sposonrMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sposonrTime != null" >
+        sposonr_time = #{record.sposonrTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sposonrWay != null" >
+        sposonr_way = #{record.sposonrWay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prepared != null" >
+        prepared = #{record.prepared,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sponsor
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      sposonr_money = #{record.sposonrMoney,jdbcType=DECIMAL},
+      sposonr_time = #{record.sposonrTime,jdbcType=TIMESTAMP},
+      sposonr_way = #{record.sposonrWay,jdbcType=VARCHAR},
+      prepared = #{record.prepared,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.ustc.eb.po.Sponsor" >
+    update sponsor
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="sposonrMoney != null" >
+        sposonr_money = #{sposonrMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="sposonrTime != null" >
+        sposonr_time = #{sposonrTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sposonrWay != null" >
+        sposonr_way = #{sposonrWay,jdbcType=VARCHAR},
+      </if>
+      <if test="prepared != null" >
+        prepared = #{prepared,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.ustc.eb.po.Sponsor" >
+    update sponsor
+    set name = #{name,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      sposonr_money = #{sposonrMoney,jdbcType=DECIMAL},
+      sposonr_time = #{sposonrTime,jdbcType=TIMESTAMP},
+      sposonr_way = #{sposonrWay,jdbcType=VARCHAR},
+      prepared = #{prepared,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
